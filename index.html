@@ -3,37 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إدارة وتطوير أبو العز العمري - الحلول الرقمية الخارقة</title>
+    <title>تطبيق البث المباشر للمباريات - إدارة وتطوير أبو العز العمري</title>
+    <!-- استدعاء مشغل الفيديو الاحترافي Video.js -->
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: Tahoma, sans-serif; }
-        body { background-color: #020617; color: #f8fafc; }
-        header { background: rgba(15, 23, 42, 0.9); padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; position: fixed; width: 100%; top: 0; z-index: 1000; }
-        .logo { font-size: 20px; font-weight: bold; color: #38bdf8; }
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px; background: radial-gradient(circle at center, #1e293b 0%, #020617 70%); }
-        h1 { font-size: 44px; margin-bottom: 20px; color: #38bdf8; }
-        p { font-size: 18px; color: #94a3b8; max-width: 700px; margin-bottom: 30px; line-height: 1.6; }
-        .btn { background: #2563eb; color: #fff; padding: 12px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; }
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 80px 50px; background: #0f172a; }
-        .card { background: #1e293b; padding: 30px; border-radius: 12px; border: 1px solid #334155; }
-        .card h3 { color: #38bdf8; margin-bottom: 15px; }
-        footer { text-align: center; padding: 20px; background: #020617; color: #64748b; border-top: 1px solid #1e293b; }
+        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
+        
+        header { background: rgba(15, 23, 42, 0.95); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; position: fixed; width: 100%; top: 0; z-index: 1000; }
+        .logo { font-size: 18px; font-weight: bold; color: #38bdf8; display: flex; align-items: center; gap: 10px; }
+        .admin-link { color: #38bdf8; text-decoration: none; font-size: 13px; font-weight: bold; background: #1e293b; padding: 8px 15px; border-radius: 6px; border: 1px solid #334155; }
+
+        .main-container { max-width: 1100px; margin: 90px auto 30px; padding: 20px; }
+        
+        /* قسم المشغل المباشر */
+        .player-wrapper { background: #000; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid #1e293b; margin-bottom: 30px; }
+        video { width: 100% !important; height: 480px !important; }
+        .current-match-info { padding: 15px 20px; background: #0f172a; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1e293b; }
+        .live-badge { background: #ef4444; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; animation: pulse 1.5s infinite; }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* أقسام القنوات والمباريات */
+        .section-title { font-size: 20px; color: #38bdf8; margin-bottom: 15px; border-right: 4px solid #2563eb; padding-right: 10px; }
+        .matches-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px; margin-bottom: 40px; }
+        .match-card { background: #0f172a; border: 1px solid #1e293b; border-radius: 10px; padding: 15px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .match-card:hover { border-color: #38bdf8; transform: translateY(-3px); }
+        .match-details h4 { font-size: 16px; margin-bottom: 5px; color: #f8fafc; }
+        .match-details p { font-size: 13px; color: #94a3b8; }
+        
+        .btn-play { background: #2563eb; color: #fff; border: none; padding: 8px 18px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-play:hover { background: #1d4ed8; }
+
+        /* مساحة إعلانات Adsterra */
+        .ads-container { background: #0f172a; border: 1px dashed #334155; padding: 20px; text-align: center; border-radius: 10px; margin: 20px 0; color: #64748b; font-size: 14px; }
+
+        footer { text-align: center; padding: 20px; color: #64748b; font-size: 13px; border-top: 1px solid #1e293b; }
     </style>
 </head>
 <body>
+
     <header>
-        <div class="logo">⚡ إدارة وتطوير أبو العز العمري</div>
-        <div><a href="/secret-portal-x99/admin-master-v1" style="color: #38bdf8; text-decoration: none; font-weight: bold;">🔐 بوابة الإدارة السرية</a></div>
+        <div class="logo">⚽ بث مباشر - إدارة وتطوير أبو العز العمري</div>
+        <div>
+            <a href="/secret-portal-x99/admin-master-v1" class="admin-link">🔐 لوحة التحكم</a>
+        </div>
     </header>
-    <div class="hero">
-        <h1>الجيل القادم من الهندسة والبرمجيات الرقمية</h1>
-        <p>نحن نصنع منظومات الويب، حلول الحماية السيبرانية، وتطبيقات الأداء العالي.</p>
-        <a href="#services" class="btn">استكشف خدماتنا الخارقة</a>
+
+    <div class="main-container">
+        
+        <!-- مشغل البث المباشر الداخلي -->
+        <div class="player-wrapper">
+            <video id="liveTVPlayer" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto">
+                <p class="vjs-no-js">اختر مباراة أو قناة من القائمة أدناه لبدء البث الفوري.</p>
+            </video>
+            <div class="current-match-info">
+                <div>
+                    <span id="nowPlayingTitle" style="font-weight: bold; font-size: 16px;">اختر مباراة للمشاهدة</span>
+                    <p style="margin: 3px 0 0; font-size: 12px; color: #94a3b8;" id="nowPlayingLeague">بث مباشر بدون روابط خارجية</p>
+                </div>
+                <div class="live-badge">🔴 مباشر حصرياً</div>
+            </div>
+        </div>
+
+        <!-- مساحة إعلانية لـ Adsterra -->
+        <div class="ads-container">
+            <p>📢 مساحة إعلانية ذكية (Adsterra Banner)</p>
+        </div>
+
+        <!-- جدول المباريات الحية والقنوات الرياضية -->
+        <h3 class="section-title">📅 جدول مباريات اليوم والبث المباشر</h3>
+        <div class="matches-grid">
+            
+            <div class="match-card">
+                <div class="match-details">
+                    <h4>برشلونة × ريال مدريد</h4>
+                    <p>الدوري الإسباني - قمة الكلاسيكو</p>
+                </div>
+                <button class="btn-play" onclick="playStream('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8', 'برشلونة × ريال مدريد', 'الدوري الإسباني - بث مباشر')">شاهد الآن</button>
+            </div>
+
+            <div class="match-card">
+                <div class="match-details">
+                    <h4>ليفربول × مانشستر سيتي</h4>
+                    <p>الدوري الإنجليزي الممتاز</p>
+                </div>
+                <button class="btn-play" onclick="playStream('https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4', 'ليفربول × مانشستر سيتي', 'الدوري الإنجليزي - بث مباشر')">شاهد الآن</button>
+            </div>
+
+            <div class="match-card">
+                <div class="match-details">
+                    <h4>قناة بي إن سبورت 1 (HD)</h4>
+                    <p>استوديو تحليلي ومباريات دوري أبطال أوروبا</p>
+                </div>
+                <button class="btn-play" onclick="playStream('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8', 'قناة بي إن سبورت 1 (HD)', 'بث مباشر على مدار الساعة')">شاهد القناة</button>
+            </div>
+
+            <div class="match-card">
+                <div class="match-details">
+                    <h4>قناة الكأس الرياضية</h4>
+                    <p>الدوري المحلي والبث الحي</p>
+                </div>
+                <button class="btn-play" onclick="playStream('https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4', 'قناة الكأس الرياضية', 'بث مباشر عالي الجودة')">شاهد القناة</button>
+            </div>
+
+        </div>
+
     </div>
-    <section id="services" class="features">
-        <div class="card"><h3>🛡️ حماية سيبرانية</h3><p>أنظمة مراقبة متطورة وتشفير عالي المستوى للبيانات.</p></div>
-        <div class="card"><h3>🚀 هندسة سيرفرات</h3><p>تطبيقات Node.js قوية وقواعد بيانات فائقة السرعة.</p></div>
-        <div class="card"><h3>💰 إعلانات Adsterra</h3><p>دمج أنظمة إعلانية ذكية لتحقيق أقصى عائد مالي.</p></div>
-    </section>
-    <footer><p>جميع الحقوق محفوظة © 2026 - إدارة وتطوير أبو العز العمري</p></footer>
+
+    <footer>
+        <p>جميع حقوق البث والتطوير محفوظة © 2026 - إدارة وتطوير أبو العز العمري</p>
+    </footer>
+
+    <!-- سكربت مشغل الفيديو -->
+    <script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
+    <script>
+        var player = videojs('liveTVPlayer');
+
+        function playStream(url, title, league) {
+            // تحديث عناوين الشاشة
+            document.getElementById('nowPlayingTitle').innerText = title;
+            document.getElementById('nowPlayingLeague').innerText = league;
+
+            // تشغيل البث مباشرة داخل المشغل دون تحويل المستخدم لأي موقع خارجي
+            player.src({
+                src: url,
+                type: url.includes('.m3u8') ? 'application/x-mpegURL' : 'video/mp4'
+            });
+            player.play();
+            
+            // التمرير التلقائي لأعلى الشاشة لرؤية المشغل يعمل
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+
 </body>
 </html>
