@@ -1,0 +1,13 @@
+/* إعدادات الألوان والتصميم الشاملة للشركة والمنظومة */
+:root {
+    --bg-primary: #020617;
+    --bg-secondary: #0f172a;
+    --accent-color: #38bdf8;
+    --text-color: #f8fafc;
+}
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+}
